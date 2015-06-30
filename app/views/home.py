@@ -1,14 +1,12 @@
 from flask import Blueprint, request, redirect,url_for,render_template,flash, abort, jsonify
 from flask.ext.login import login_user, login_required, current_user, logout_user
-from app.models import User, RevokedToken as RT, Building, Classroom, Ticket
-from app.forms import LoginForm, RegisterForm, ForgotPasswordForm, ResetPasswordForm
-from app.utils import ts, send_confirm_mail, send_reset_password_mail
+from app.models import User, Building, Classroom, Ticket
+from app.forms import *
 from flask.ext.babel import gettext as _
 from datetime import datetime
 from sqlalchemy import union, or_
-from .course import termlist, deptlist
 
-home = Blueprint('home',__name__)
+home = Blueprint('home', __name__)
 
 @home.route('/')
 def index():

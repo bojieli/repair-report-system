@@ -42,8 +42,5 @@ user_loaded_from_cookie.connect(log_login)
 
 
 from app.views import *
-app.register_blueprint(home,url_prefix='')
-app.register_blueprint(course,url_prefix='/course')
-app.register_blueprint(review, url_prefix='/review')
-app.register_blueprint(api, url_prefix='/api')
+app.register_blueprint(home, url_prefix='')
 app.register_blueprint(user, url_prefix='/user')
