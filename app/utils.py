@@ -14,6 +14,35 @@ import re
 mail = Mail(app)
 ts = URLSafeTimedSerializer(app.config["SECRET_KEY"])
 
+def send_new_ticket_mail(recipients,ticket):
+    subject = "新表单提醒"
+    url = url_for('ticket.view_ticket',
+        ticket_id=ticket.id,
+        _external=True)
+    html = render_template('email/new-ticket.html',
+            url = url)
+    msg = Message(subject=subject, html=html, recipients=recipients)
+    mail.send(msg)
+
+def send_assign_ticket_mail(recipients,ticket):
+    subject = "分配了新表单"
+    url = url_for('ticket.view_ticket',
+        ticket_id=ticket.id,
+        _external=True)
+    html = render_template('email/assign-ticket.html',
+            url = url)
+    msg = Message(subject=subject, html=html, recipients=recipients)
+    mail.send(msg)
+
+def send_close_ticket_mail(recipients,ticket):
+    subject = "您提交的保修单已经处理完毕"
+    url = url_for('ticket.view_ticket',
+        ticket_id=ticket.id,
+        _external=True)
+    html = render_template('email/close-ticket.html',url=url)
+    msg = Message(subject=subject, html=html, recipients=recipients)
+    mail.send(msg)
+
 def rand_str():
     random_num = randint(100000,999999)
     raw_str = str(datetime.utcnow()) + str(randint(100000,999999))

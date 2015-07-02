@@ -4,6 +4,7 @@ from app.models import *
 from app.forms import *
 from datetime import datetime
 from sqlalchemy import union, or_
+from app.utils import send_close_ticket_mail
 
 ticket = Blueprint('ticket', __name__)
 
@@ -54,6 +55,12 @@ def assign(ticket_id):
         ticket.worker = worker
         ticket.status = 'Assigned'
         ticket.save()
+        if ticket.worker.email:
+            recipients = [ticket.worker.email]
+            try:
+                send_assign_tiecket_mail(recipients, ticket)
+            except Exception as e:
+                print(e)
         return redirect(url_for('ticket.view_ticket', ticket_id=ticket.id))
 
     return render_template('assign-ticket.html', form=form, ticket=ticket)
@@ -75,6 +82,12 @@ def respond(ticket_id):
         ticket.respond_time = datetime.utcnow()
         ticket.status = 'Closed'
         ticket.save()
+        if ticket.reporter_email:
+            recipients = [ticket.reporter_email]
+            try:
+                send_close_ticket_mail(recipients, ticket)
+            except Exception as e:
+                print(e)
         return redirect(url_for('ticket.view_ticket', ticket_id=ticket.id))
 
     return render_template('respond-ticket.html', form=form, ticket=ticket)

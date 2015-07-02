@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from flask import Flask
+from flask import Flask,url_for
 from flask.ext.sqlalchemy import SQLAlchemy
 from sqlalchemy import ForeignKeyConstraint
 from datetime import datetime
@@ -69,4 +69,9 @@ class Ticket(db.Model):
             return '<span class="label label-primary">处理中</span>'
         else:
             return '<span class="label label-success">已处理</span>'
+
+    @property
+    def url(self):
+        return url_for("ticket.view_ticket",ticket_id=self.id)
+
 

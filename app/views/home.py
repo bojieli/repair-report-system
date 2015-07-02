@@ -4,7 +4,7 @@ from app.models import *
 from app.forms import *
 from datetime import datetime
 from sqlalchemy import union, or_
-from app.utils import sanitize
+from app.utils import sanitize, send_new_ticket_mail
 
 home = Blueprint('home', __name__)
 
@@ -17,6 +17,13 @@ def index():
         form.populate_obj(ticket)
         ticket.save()
         message = "你的报修单号码是 " + str(ticket.id) + "，点击 <a href=\"" + url_for('ticket.view_ticket', ticket_id=ticket.id) + "\">这里</a> 查看。"
+        # Send mail
+        recipients = []
+        for manager in ticket.department.managers:
+            if manager.email:
+                recipients.append(manager.email)
+        if recipients:
+            send_new_ticket_mail(recipients, ticket)
         return render_template('feedback.html', status = True, message=message)
     departments = Department.query.all()
     return render_template('index.html',form=form, departments=departments)
