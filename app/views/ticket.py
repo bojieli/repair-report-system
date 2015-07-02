@@ -7,6 +7,11 @@ from sqlalchemy import union, or_
 
 ticket = Blueprint('ticket', __name__)
 
+@ticket.route('/all/')
+def all():
+    tickets = Ticket.query.order_by(Ticket.status.desc()).order_by(Ticket.id.desc())
+    return render_template('alltickets.html', tickets=tickets)
+
 @ticket.route('/my/')
 @login_required
 def mytickets():
@@ -83,4 +88,3 @@ def query_ticket():
         return render_template('feedback.html', status=False, message= message)
     return render_template('viewticket.html', ticket=ticket)
 
->>>>>>> 30f73a0f74f471a4caf5fd2872d0532807ef9b95

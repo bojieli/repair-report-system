@@ -5,6 +5,7 @@
       <div class="panel-body">
         <table class="table table-condensed table-striped">
             <tr><th>故障类别</th><td>{{ ticket.department.description }}</td></tr>
+            <tr><th>负责部门</th><td>{{ ticket.department.name }}</td></tr>
             <tr><th>故障位置</th><td>{{ ticket.location }}</td></tr>
             <tr><th>处理状态</th><td>{{ ticket.status_label|safe }}</td></tr>
             <tr><th>报修时间</th><td>{{ ticket.report_time|localtime }}</td></tr>

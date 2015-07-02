@@ -1,5 +1,6 @@
 body {
     padding-bottom: 30px;
+    background-color: #f3f3f3;
 }
 /* Sticky footer styles */
 html, body { height: 100%; }
@@ -15,5 +16,17 @@ html, body { height: 100%; }
 }
 #footer {
     margin-bottom: 20px;
+}
+p { line-height: 25px; word-wrap: break-word; }
+
+.float-element {
+    background-color: #ffffff;
+    padding: 30px;
+    margin: 5px 0 20px 0;
+}
+.blue { color: #337ab7; }
+.status-message {
+    font-size: 17px;
+    margin-bottom: 50px;
 }
 
