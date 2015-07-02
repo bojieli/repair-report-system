@@ -10,8 +10,12 @@ home = Blueprint('home', __name__)
 @home.route('/', methods=['GET','POST'])
 def index():
     form = TicketForm(request.form)
-    if form.validate_on_submit:
-        pass
+    if request.method == 'POST' and form.validate_on_submit:
+        ticket = Ticket()
+        form.populate_obj(ticket)
+        ticket.save()
+        message = "你的表单号码是" + str(ticket.id)
+        return render_template('feedback.html', status = True, message=message)
     departments = Department.query.all()
     return render_template('index.html',form=form, departments=departments)
 
