@@ -57,7 +57,7 @@ class Ticket(db.Model):
     status = db.Column(db.Enum('unassigned', 'assigned', 'closed'), nullable=False, default='unassigned') # 未分配、已分配、已处理
     description = db.Column(db.Text())
 
-    report_time = db.Column(db.DateTime(), nullable=False, default=datetime.utcnow)
+    report_time = db.Column(db.DateTime(), nullable=False, default=datetime.utcnow())
     reporter_email = db.Column(db.String(255))
     reporter_phone = db.Column(db.String(255))
 

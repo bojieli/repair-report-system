@@ -59,7 +59,7 @@ ticket2.status = 'assigned'
 ticket2.description = '网络通密码忘了'
 ticket2.reporter_email = 'boj@mail.ustc.edu.cn'
 ticket2.reporter_phone = '0551-00000000'
-ticket2.assign_time = datetime.utcnow
+ticket2.assign_time = datetime.utcnow()
 ticket2.manager = manager_net1
 ticket2.worker = worker_net1
 ticket2.save()
@@ -71,10 +71,10 @@ ticket3.status = 'closed'
 ticket3.description = '网络通 7 号出口上不了 Facebook'
 ticket3.reporter_email = 'boj@mail.ustc.edu.cn'
 ticket3.reporter_phone = '0551-00000000'
-ticket3.assign_time = datetime.utcnow
+ticket3.assign_time = datetime.utcnow()
 ticket3.manager = manager_net2
 ticket3.worker = worker_net2
-ticket3.respond_time = datetime.utcnow
+ticket3.respond_time = datetime.utcnow()
 ticket3.response = '不是本部门负责的问题'
 ticket3.save()
 

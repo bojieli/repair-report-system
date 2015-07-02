@@ -25,9 +25,9 @@ class User(db.Model, UserMixin):
 
     def __init__(self, username, password, role, department):
         self.username = username
-        self.set_password(password)
         self.role = role
         self.department = department
+        self.set_password(password)
         self.save()
 
     def __repr__(self):
