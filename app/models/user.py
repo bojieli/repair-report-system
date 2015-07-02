@@ -60,6 +60,13 @@ class User(db.Model, UserMixin):
             authenticated = False
         return user, authenticated if user else False
 
+    @property
+    def role_name(self):
+        if self.role == 'Manager':
+            return '部门主管'
+        else:
+            return '维修员'
+
 
 @lm.user_loader
 def load_user(userid):
