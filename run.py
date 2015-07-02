@@ -2,7 +2,6 @@
 from app import app
 from app import db
 from random import randint
-from app.models import Review, Course, Student, User
 
 debug = True
 
