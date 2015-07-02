@@ -11,7 +11,7 @@
 
     {% if ticket.status != 'Closed' and current_user.is_authenticated() %}
     {% if current_user.role == 'Manager' %}
-    <a href="{{ url_for('ticket.respond', ticket_id=ticket.id) }}"><button class="btn btn-primary">分配报修单</button></a>
+    <a href="{{ url_for('ticket.assign', ticket_id=ticket.id) }}"><button class="btn btn-primary">分配报修单</button></a>
     {% endif %}
     {% if current_user.role == 'Manager' or current_user == ticket.worker %}
     <a href="{{ url_for('ticket.respond', ticket_id=ticket.id) }}"><button class="btn btn-success">完成报修单</button></a>

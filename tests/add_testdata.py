@@ -39,22 +39,22 @@ manager_class = User('classadm', 'classadm', 'Manager', dept_class)
 manager_dorm = User('dormadm', 'dormadm', 'Manager', dept_dorm)
 manager_lib = User('libadm', 'libadm', 'Manager', dept_lib)
 manager_net1 = User('netadm1', 'netadm1', 'Manager', dept_net)
-manager_net1.email = 'ch888@mail.ustc.edu.cn'
+manager_net1.email = 'boj@mail.ustc.edu.cn'
 manager_net1.save()
 manager_net2 = User('netadm2', 'netadm2', 'Manager', dept_net)
-manager_net2.email = 'ch888@ustc.edu.cn'
+manager_net2.email = 'boj@mail.ustc.edu.cn'
 manager_net2.save()
 
 worker_net1 = User('worker1', 'worker1', 'Worker', dept_net)
-worker_net1.email = 'worker1@ustc.edu.cn'
+worker_net1.email = 'boj@mail.ustc.edu.cn'
 worker_net1.phone = '0551-11111111'
 worker_net1.save()
 worker_net2 = User('worker2', 'worker2', 'Worker', dept_net)
-worker_net2.email = 'ch888@mail.ustc.edu.cn'
+worker_net2.email = 'boj@mail.ustc.edu.cn'
 worker_net2.phone = '0551-22222222'
 worker_net2.save()
 worker_net3 = User('worker3', 'worker3', 'Worker', dept_net)
-worker_net3.email = 'worker3@ustc.edu.cn'
+worker_net3.email = 'boj@mail.ustc.edu.cn'
 worker_net3.phone = '0551-33333333'
 worker_net3.save()
 

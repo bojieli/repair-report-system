@@ -27,6 +27,8 @@ MAIL_MAX_EMAILS = None
 #MAIL_SUPPRESS_SEND =
 MAIL_ASCII_ATTACHMENTS = False
 
+MAIL_SERVER_NAME = '10.0.0.2'
+
 # Upload config
 UPLOAD_FOLDER = '/tmp/uploads'
 # Alowed extentsions for a filetype
