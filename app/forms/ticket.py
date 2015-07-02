@@ -5,7 +5,8 @@ from wtforms.validators import (InputRequired,NumberRange, Length)
 from app.models import Ticket
 
 class TicketForm(Form):
-    building_id = IntegerField('building', validators=[InputRequired(), NumberRange(1,3)])
-    classroom_id = IntegerField('classroom', validators=[NumberRange(1,3)])
-    reporter_contact = StringField('contact')
+    department_id = IntegerField('building', validators=[InputRequired(), NumberRange(1,3)])
+    location = StringField('location')
+    reporter_email = StringField('email')
+    reporter_phone = StringField('phone')
     description = TextAreaField('description', validators=[InputRequired()])

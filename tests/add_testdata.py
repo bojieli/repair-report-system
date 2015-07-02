@@ -8,11 +8,12 @@ from app.models import *
 db.drop_all()
 db.create_all()
 
-dept_class = Department('教室')
-dept_dorm = Department('寝室')
-dept_lib = Department('图书馆')
-dept_net = Department('校园网')
+dept_class = Department('教务处','综合教务系统')
+dept_dorm = Department('后勤部门','热水工程设备')
+dept_lib = Department('图书馆','图书馆')
+dept_net = Department('网络中心','校园网络')
 
+'''
 class1 = Location('一教', dept_class)
 class2 = Location('二教', dept_class)
 class3 = Location('三教', dept_class)
@@ -32,6 +33,7 @@ net1 = Location('ustcnet 无线', dept_net)
 net2 = Location('网络通', dept_net)
 net3 = Location('校园卡', dept_net)
 net4 = Location('电子邮件', dept_net)
+'''
 
 manager_class = User('classadm', 'classadm', 'Manager', dept_class)
 manager_dorm = User('dormadm', 'dormadm', 'Manager', dept_dorm)
@@ -45,7 +47,7 @@ worker_net3 = User('worker3', 'worker3', 'Worker', dept_net)
 
 ticket1 = Ticket()
 ticket1.department = dept_net
-ticket1.location = net0
+ticket1.location = '有线网络'
 ticket1.status = 'unassigned'
 ticket1.description = '西区 #11 楼网络不稳定'
 ticket1.reporter_email = 'boj@mail.ustc.edu.cn'
@@ -54,7 +56,7 @@ ticket1.save()
 
 ticket2 = Ticket()
 ticket2.department = dept_net
-ticket2.location = net2
+ticket2.location = '网络通'
 ticket2.status = 'assigned'
 ticket2.description = '网络通密码忘了'
 ticket2.reporter_email = 'boj@mail.ustc.edu.cn'
@@ -66,7 +68,7 @@ ticket2.save()
 
 ticket3 = Ticket()
 ticket3.department = dept_net
-ticket3.location = net2
+ticket3.location = '网络通'
 ticket3.status = 'closed'
 ticket3.description = '网络通 7 号出口上不了 Facebook'
 ticket3.reporter_email = 'boj@mail.ustc.edu.cn'

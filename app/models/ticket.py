@@ -12,9 +12,11 @@ class Department(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255), unique=True)
+    description = db.Column(db.String(255))
 
-    def __init__(self, name):
+    def __init__(self, name, description):
         self.name = name
+        self.description = description
         self.save()
 
     def save(self):
@@ -30,31 +32,13 @@ class Department(db.Model):
         return User.query.filter(User.department_id == self.id).filter(User.role == 'Worker').all()
 
 
-class Location(db.Model):
-    __tablename__ = 'locations'
-
-    id = db.Column(db.Integer, primary_key=True)
-    department_id = db.Column(db.Integer, db.ForeignKey('departments.id'), nullable=False)
-    name = db.Column(db.String(255))
-
-    department = db.relationship('Department')
-
-    def __init__(self, name, department):
-        self.name = name
-        self.department = department
-        self.save()
-
-    def save(self):
-        db.session.add(self)
-        db.session.commit()
-
 class Ticket(db.Model):
     __tablename__ = 'tickets'
 
     id = db.Column(db.Integer, primary_key=True)
     department_id = db.Column(db.Integer, db.ForeignKey('departments.id'), nullable=False)
-    location_id = db.Column(db.Integer, db.ForeignKey('locations.id'))
     status = db.Column(db.Enum('unassigned', 'assigned', 'closed'), nullable=False, default='unassigned') # 未分配、已分配、已处理
+    location = db.Column(db.String(255))
     description = db.Column(db.Text())
 
     report_time = db.Column(db.DateTime(), nullable=False, default=datetime.utcnow())
@@ -69,7 +53,6 @@ class Ticket(db.Model):
     response = db.Column(db.Text())
 
     department = db.relationship('Department')
-    location = db.relationship('Location')
     manager = db.relationship('User', foreign_keys=manager_id)
     worker = db.relationship('User', foreign_keys=worker_id)
 

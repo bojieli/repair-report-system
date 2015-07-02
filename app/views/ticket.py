@@ -27,7 +27,7 @@ def view_ticket(ticket_id):
     return render_template('viewticket.html', ticket=ticket)
 
 
-@ticket.route('/create/')
+@ticket.route('/create/',methods=['GET','POST'])
 def create_ticket():
     sanitize(form.content.data)
     return render_template('newticket.html')

@@ -7,9 +7,13 @@ from sqlalchemy import union, or_
 
 home = Blueprint('home', __name__)
 
-@home.route('/')
+@home.route('/', methods=['GET','POST'])
 def index():
-    return render_template('index.html')
+    form = TicketForm(request.form)
+    if form.validate_on_submit:
+        pass
+    departments = Department.query.all()
+    return render_template('index.html',form=form, departments=departments)
 
 @home.route('/tickets/')
 def tickets():
@@ -17,7 +21,7 @@ def tickets():
     per_page = request.args.get('per_page', 10, type=int)
     tickets_paged = Ticket.query.order_by(Ticket.id.desc()).paginate(page=page, per_page=per_page)
 
-    return render_template('tickets.html', tickets=tickets_paged, this_module='home.tickets')
+    return render_template('tickets.html',tickets=tickets_paged, this_module='home.tickets')
 
 @home.route('/search/')
 def search():
