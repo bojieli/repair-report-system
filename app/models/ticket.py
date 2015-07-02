@@ -35,13 +35,15 @@ class Ticket(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     building_id = db.Column(db.Integer, db.ForeignKey('buildings.id'), nullable=False)
     classroom_id = db.Column(db.Integer, db.ForeignKey('classrooms.id'))
-    report_time = db.Column(db.DateTime(), nullable=False, default=datetime.utcnow)
     status = db.Column(db.Enum('unassigned', 'assigned', 'closed'), nullable=False, default='unassigned') # 未分配、已分配、已处理
-    reporter_contact = db.Column(db.String(255))
     description = db.Column(db.Text())
+
+    report_time = db.Column(db.DateTime(), nullable=False, default=datetime.utcnow)
+    reporter_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
     assign_time = db.Column(db.DateTime())
     worker_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+
     respond_time = db.Column(db.DateTime())
     response = db.Column(db.Text())
 

@@ -16,13 +16,12 @@ def index():
 def tickets():
     page = request.args.get('page', 1, type=int)
     per_page = request.args.get('per_page', 10, type=int)
-    tickets_paged = Ticket.query.filter(Ticket.status != 'new').order_by(Ticket.id.desc()).paginate(page=page, per_page=per_page)
+    tickets_paged = Ticket.query.order_by(Ticket.id.desc()).paginate(page=page, per_page=per_page)
 
     return render_template('tickets.html', tickets=tickets_paged, this_module='home.tickets')
 
 @home.route('/search/')
 def search():
-    ''' 搜索 '''
     keyword = request.args.get('q')
     if not keyword:
         return redirect(url_for('home.index'))
@@ -40,6 +39,17 @@ def search():
 
     return render_template('tickets.html', keyword=keyword, tickets=tickets_paged, this_module='home.search')
 
+@home.route('/mytickets/')
+def mytickets():
+    if current_user.role == 'Reporter':
+        mytickets = Ticket.query.filter(Ticket.reporter_id == current_user.id)
+    elif current_user.role == 'Manager':
+        mytickets = Ticket.query
+    else:
+        mytickets = Ticket.query.filter(Ticket.worker_id == current_user.id)
+
+    mytickets = mytickets.order_by(Ticket.status.desc()).order_by(Ticket.id.desc())
+    return render_template('mytickets.html', tickets=mytickets)
 
 @home.route('/signin/',methods=['POST','GET'])
 def signin():

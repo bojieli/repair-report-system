@@ -1,0 +1,56 @@
+{% include 'common-header.html' %}
+
+<body>
+  <div id="wrap">
+  <nav class="navbar navbar-default">
+    <div class="container">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="{{ url_for('home.index') }}">USTC故障报修系统</a>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div id="navbar" class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+          <li><a href="{{ url_for('home.index') }}">我要报修</a></li>
+          <li><a href="{{ url_for('home.mytickets') }}">我的报修单</a></li>
+          <li><a href="{{ url_for('home.tickets') }}">所有报修单</a></li>
+        </ul>
+
+        <ul class="nav navbar-nav float-right">
+          {% if current_user.is_authenticated() %}
+          <li>{{ current_user.role }} {{ current_user.username }} <a href="{{ url_for('user.logout') }}">登出</a></li>
+          {% else %}
+          <li><a href="{{ url_for('user.signin') }}">登录</a></li>
+          {% endif %}
+        </ul>
+        
+      </div><!--/.nav-collapse -->
+    </div>
+  </nav>
+
+  {% block content %}
+  {% endblock %}
+  <div id="push"></div>
+  </div><!-- ./wrap -->
+{% include 'common-footer.html' %}
+</body>
+
+
+
+
+  <!-- Bootstrap core JavaScript
+  ================================================== -->
+  <!-- Placed at the end of the document so the pages load faster -->
+  <script src="/static/js/jquery.min.js"></script>
+  <script src="/static/js/bootstrap.min.js"></script>
+  {% include 'common-scripts.html' %}
+
+  {% block script %} {% endblock %}
+</html>
