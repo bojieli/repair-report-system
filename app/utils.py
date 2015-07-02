@@ -70,8 +70,6 @@ def handle_upload(file,type):
             file.save(os.path.join(upload_path, new_filename))
         except Exception as e:
             return False,e
-        img = ImageStore(old_filename,new_filename)
-        img.save()
         return True,new_filename
     return False,"File type disallowd!"
 

@@ -16,7 +16,7 @@ def index():
         form.description.data = sanitize(form.description.data)
         form.populate_obj(ticket)
         ticket.save()
-        message = "你的表单号码是" + str(ticket.id)
+        message = "你的报修单号码是 " + str(ticket.id) + "，点击 <a href=\"" + url_for('ticket.view_ticket', ticket_id=ticket.id) + "\">这里</a> 查看。"
         return render_template('feedback.html', status = True, message=message)
     departments = Department.query.all()
     return render_template('index.html',form=form, departments=departments)
