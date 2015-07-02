@@ -89,6 +89,8 @@ def html_abstract(text):
 
 @app.template_filter('localtime')
 def localtime_minute(date):
+    if not date:
+        return 'N/A'
     local = pytz.utc.localize(date, is_dst=False).astimezone(pytz.timezone('Asia/Shanghai'))
     return local.strftime('%Y-%m-%d %H:%M')
 

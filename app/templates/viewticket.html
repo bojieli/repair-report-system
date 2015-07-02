@@ -14,7 +14,7 @@
       <div class="panel-body">
         <table class="table table-condensed table-striped">
             <tr><th>部门</th><td>{{ ticket.department.name }}</td></tr>
-            <tr><th>位置</th><td>{{ ticket.location.name if ticket.location or '其他' }}</td></tr>
+            <tr><th>位置</th><td>{{ ticket.location }}</td></tr>
             <tr><th>处理状态</th><td>{{ ticket.status }}</td></tr>
             <tr><th>报修时间</th><td>{{ ticket.report_time|localtime }}</td></tr>
             <tr><th>分配时间</th><td>{{ ticket.assign_time|localtime }}</td></tr>
