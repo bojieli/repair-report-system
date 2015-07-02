@@ -44,3 +44,4 @@ user_loaded_from_cookie.connect(log_login)
 from app.views import *
 app.register_blueprint(home, url_prefix='')
 app.register_blueprint(user, url_prefix='/user')
+app.register_blueprint(ticket, url_prefix='/ticket')

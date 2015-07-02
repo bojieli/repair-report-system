@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="container">
+
+  <div class="float-element">
+    <h3 class="blue">报修单 #{{ ticket.id }}</h3>
+
+    <hr>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">基本信息</h3>
+      </div>
+      <div class="panel-body">
+        <table class="table table-condensed table-striped">
+            <tr><th>部门</th><td>{{ ticket.department.name }}</td></tr>
+            <tr><th>位置</th><td>{{ ticket.location.name if ticket.location or '其他' }}</td></tr>
+            <tr><th>处理状态</th><td>{{ ticket.status }}</td></tr>
+            <tr><th>报修时间</th><td>{{ ticket.report_time|localtime }}</td></tr>
+            <tr><th>分配时间</th><td>{{ ticket.assign_time|localtime }}</td></tr>
+            <tr><th>处理时间</th><td>{{ ticket.respond_time|localtime }}</td></tr>
+            <tr><th>报修人联系方式</th><td>{{ ticket.reporter_email }} {{ ticket.reporter_phone }}</td></tr>
+            {% if ticket.worker %}
+            <tr><th>处理人联系方式</th><td>{{ ticket.worker.email }} {{ ticket.worker.phone }}</td></tr>
+            {% endif %}
+        </table>
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">故障描述</h3>
+      </div>
+      <div class="panel-body">
+      {{ ticket.description|safe }}
+      </div>
+    </div>
+
+    {% if ticket.status == 'Closed' %}
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">处理结果</h3>
+      </div>
+      <div class="panel-body">
+      {{ ticket.response|safe }}
+      </div>
+    </div>
+    {% endif %}
+
+  </div><!-- /.float-element -->
+</div><!-- /.container -->
+
+{% endblock %}
+
+{% block script %}
+{% endblock %}

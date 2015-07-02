@@ -16,8 +16,12 @@ class User(db.Model, UserMixin):
     id = db.Column(db.Integer,primary_key=True)
     username = db.Column(db.String(255), unique=True) #用户名
     password = db.Column(db.String(255),nullable=False)
-    role = db.Column(db.Enum('Reporter', 'Manager', 'Worker'), nullable=False) # 报修用户、维修部门主管、维修人员
-    contact = db.Column(db.String(255))  # 联系方式
+    role = db.Column(db.Enum('Manager', 'Worker'), nullable=False) # 维修部门主管、维修人员
+    department_id = db.Column(db.ForeignKey('departments.id'))
+    email = db.Column(db.String(255))
+    phone = db.Column(db.String(255))
+
+    department = db.relationship('Department', backref='managers')
 
     def __init__(self, username, password):
         self.username = username

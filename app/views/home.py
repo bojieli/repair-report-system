@@ -38,17 +38,3 @@ def search():
 
     return render_template('tickets.html', keyword=keyword, tickets=tickets_paged, this_module='home.search')
 
-@home.route('/mytickets/')
-@login_required
-def mytickets():
-    if current_user.role == 'Reporter':
-        mytickets = Ticket.query.filter(Ticket.reporter_id == current_user.id)
-    elif current_user.role == 'Manager':
-        mytickets = Ticket.query
-    else:
-        mytickets = Ticket.query.filter(Ticket.worker_id == current_user.id)
-
-    mytickets = mytickets.order_by(Ticket.status.desc()).order_by(Ticket.id.desc())
-    return render_template('mytickets.html', tickets=mytickets)
-
-
