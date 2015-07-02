@@ -4,6 +4,7 @@ from app.models import *
 from app.forms import *
 from datetime import datetime
 from sqlalchemy import union, or_
+from app.utils import sanitize
 
 home = Blueprint('home', __name__)
 
@@ -13,6 +14,7 @@ def index():
     if request.method == 'POST' and form.validate_on_submit:
         ticket = Ticket()
         form.populate_obj(ticket)
+        form.description.data = sanitize(form.description.data)
         ticket.save()
         message = "你的表单号码是" + str(ticket.id)
         return render_template('feedback.html', status = True, message=message)
