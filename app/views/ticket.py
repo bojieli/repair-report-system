@@ -18,7 +18,6 @@ def mytickets():
     mytickets = mytickets.order_by(Ticket.status.desc()).order_by(Ticket.id.desc())
     return render_template('mytickets.html', tickets=mytickets)
 
-
 @ticket.route('/<int:ticket_id>')
 def view_ticket(ticket_id):
     ticket = Ticket.query.get(ticket_id)
@@ -74,3 +73,14 @@ def respond(ticket_id):
         return redirect(url_for('ticket.view_ticket', ticket_id=ticket.id))
 
     return render_template('respond-ticket.html', form=form, ticket=ticket)
+
+@ticket.route('/')
+def query_ticket():
+    ticket_id = request.args.get('id',type=int)
+    ticket = Ticket.query.get(ticket_id)
+    if not ticket:
+        message = "你查找的ticket不存在"
+        return render_template('feedback.html', status=False, message= message)
+    return render_template('viewticket.html', ticket=ticket)
+
+>>>>>>> 30f73a0f74f471a4caf5fd2872d0532807ef9b95
