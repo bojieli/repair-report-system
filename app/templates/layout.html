@@ -23,7 +23,7 @@
           <li><a href="{{ url_for('home.tickets') }}">所有报修单</a></li>
         </ul>
 
-        <ul class="nav navbar-nav float-right">
+        <ul class="nav navbar-nav navbar-right">
           {% if current_user.is_authenticated() %}
           <li>{{ current_user.role }} {{ current_user.username }} <a href="{{ url_for('user.logout') }}">登出</a></li>
           {% else %}

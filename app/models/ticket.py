@@ -5,25 +5,44 @@ from sqlalchemy import ForeignKeyConstraint
 from datetime import datetime
 from app import db, login_manager as lm
 from random import randint
+from app.models import User
 
 class Department(db.Model):
     __tablename__ = 'departments'
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(255))
+    name = db.Column(db.String(255), unique=True)
+
+    def __init__(self, name):
+        self.name = name
+        self.save()
 
     def save(self):
         db.session.add(self)
         db.session.commit()
 
+    @property
+    def managers(self):
+        return User.query.filter(User.department_id == self.id).filter(User.role == 'Manager').all()
+
+    @property
+    def workers(self):
+        return User.query.filter(User.department_id == self.id).filter(User.role == 'Worker').all()
+
+
 class Location(db.Model):
     __tablename__ = 'locations'
 
     id = db.Column(db.Integer, primary_key=True)
-    department_id = db.Column(db.Integer, db.ForeignKey('departments.id'))
+    department_id = db.Column(db.Integer, db.ForeignKey('departments.id'), nullable=False)
     name = db.Column(db.String(255))
 
     department = db.relationship('Department')
+
+    def __init__(self, name, department):
+        self.name = name
+        self.department = department
+        self.save()
 
     def save(self):
         db.session.add(self)
@@ -49,8 +68,9 @@ class Ticket(db.Model):
     respond_time = db.Column(db.DateTime())
     response = db.Column(db.Text())
 
-    building = db.relationship('Building')
-    classroom = db.relationship('Classroom')
+    department = db.relationship('Department')
+    location = db.relationship('Location')
+    manager = db.relationship('User', foreign_keys=manager_id)
     worker = db.relationship('User', foreign_keys=worker_id)
 
     def save(self):

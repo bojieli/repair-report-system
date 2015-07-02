@@ -17,15 +17,18 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(255), unique=True) #用户名
     password = db.Column(db.String(255),nullable=False)
     role = db.Column(db.Enum('Manager', 'Worker'), nullable=False) # 维修部门主管、维修人员
-    department_id = db.Column(db.ForeignKey('departments.id'))
+    department_id = db.Column(db.ForeignKey('departments.id'), nullable=False)
     email = db.Column(db.String(255))
     phone = db.Column(db.String(255))
 
-    department = db.relationship('Department', backref='managers')
+    department = db.relationship('Department')
 
-    def __init__(self, username, password):
+    def __init__(self, username, password, role, department):
         self.username = username
         self.set_password(password)
+        self.role = role
+        self.department = department
+        self.save()
 
     def __repr__(self):
         return '<{} {} ({})>'.format(self.role, self.username, self.password)
@@ -55,7 +58,7 @@ class User(db.Model, UserMixin):
             authenticated = user.check_password(password)
         else:
             authenticated = False
-        return user, authenticated, user.confirmed if user else False
+        return user, authenticated if user else False
 
 
 @lm.user_loader
