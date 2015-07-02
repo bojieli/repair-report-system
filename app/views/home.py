@@ -13,8 +13,8 @@ def index():
     form = TicketForm(request.form)
     if request.method == 'POST' and form.validate_on_submit:
         ticket = Ticket()
-        form.populate_obj(ticket)
         form.description.data = sanitize(form.description.data)
+        form.populate_obj(ticket)
         ticket.save()
         message = "你的表单号码是" + str(ticket.id)
         return render_template('feedback.html', status = True, message=message)
@@ -57,14 +57,14 @@ def signin():
     error = ''
     if form.validate_on_submit():
         user, status = User.authenticate(form['username'].data,form['password'].data)
-        remember = form['remember'].data
         if user:
             if status:
+                login_user(user)
                 return redirect(next_url)
             else:
-                error = _('用户名或密码错误！')
+                error = '用户名或密码错误！'
         else:
-            error = _('用户名或密码错误！')
+            error = '用户名或密码错误！'
     return render_template('signin.html',form=form, error=error)
 
 

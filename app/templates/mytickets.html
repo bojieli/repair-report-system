@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="container">
+
+  <div class="float-element">
+    <h3 class="blue">我负责的报修单</h3>
+
+    <hr>
+    <table class="table table-condensed table-striped">
+        <tr>
+            <th>ID</th>
+            <th>故障类别</th>
+            <th>故障位置</th>
+            <th>故障详情</th>
+            <th>报修时间</th>
+            <th>处理状态</th>
+            <th>处理人</th>
+            <th>管理操作</th>
+        </tr>
+        {% for ticket in tickets %}
+        <tr>
+            <td>{{ ticket.id }}</td>
+            <td>{{ ticket.department.description }}</td>
+            <td>{{ ticket.location }}</td>
+            <td><a href="{{ url_for('ticket.view_ticket', ticket_id=ticket.id) }}">{{ ticket.description|abstract }}</a></td>
+            <td>{{ ticket.report_time|localtime }}</td>
+            <td>{{ ticket.status_label|safe }}</td>
+            <td>{{ ticket.worker.username if ticket.worker or 'N/A' }}</td>
+            <td>
+            {% if ticket.status != 'Closed' %}
+            {% if current_user.role == 'Manager' %}
+            <a href="{{ url_for('ticket.assign', ticket_id=ticket.id) }}">分配任务</a>
+            {% endif %}
+            {% if current_user.role == 'Manager' or current_user == ticket.worker %}
+            <a href="{{ url_for('ticket.respond', ticket_id=ticket.id) }}">完成任务</a>
+            {% endif %}
+            {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+   </div><!-- /.float-element -->
+</div><!-- /.container -->
+
+{% endblock %}
+
+{% block script %}
+{% endblock %}

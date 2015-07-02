@@ -54,7 +54,7 @@ class User(db.Model, UserMixin):
     def authenticate(cls,login,password):
         user = cls.query.filter(User.username == login).first()
 
-        if user and user.confirmed:
+        if user:
             authenticated = user.check_password(password)
         else:
             authenticated = False

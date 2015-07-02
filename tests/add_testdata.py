@@ -48,7 +48,7 @@ worker_net3 = User('worker3', 'worker3', 'Worker', dept_net)
 ticket1 = Ticket()
 ticket1.department = dept_net
 ticket1.location = '有线网络'
-ticket1.status = 'unassigned'
+ticket1.status = 'Unassigned'
 ticket1.description = '西区 #11 楼网络不稳定'
 ticket1.reporter_email = 'boj@mail.ustc.edu.cn'
 ticket1.reporter_phone = '0551-00000000'
@@ -57,7 +57,7 @@ ticket1.save()
 ticket2 = Ticket()
 ticket2.department = dept_net
 ticket2.location = '网络通'
-ticket2.status = 'assigned'
+ticket2.status = 'Assigned'
 ticket2.description = '网络通密码忘了'
 ticket2.reporter_email = 'boj@mail.ustc.edu.cn'
 ticket2.reporter_phone = '0551-00000000'
@@ -69,7 +69,7 @@ ticket2.save()
 ticket3 = Ticket()
 ticket3.department = dept_net
 ticket3.location = '网络通'
-ticket3.status = 'closed'
+ticket3.status = 'Closed'
 ticket3.description = '网络通 7 号出口上不了 Facebook'
 ticket3.reporter_email = 'boj@mail.ustc.edu.cn'
 ticket3.reporter_phone = '0551-00000000'

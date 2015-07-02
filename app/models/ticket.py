@@ -32,12 +32,13 @@ class Department(db.Model):
         return User.query.filter(User.department_id == self.id).filter(User.role == 'Worker').all()
 
 
+
 class Ticket(db.Model):
     __tablename__ = 'tickets'
 
     id = db.Column(db.Integer, primary_key=True)
     department_id = db.Column(db.Integer, db.ForeignKey('departments.id'), nullable=False)
-    status = db.Column(db.Enum('unassigned', 'assigned', 'closed'), nullable=False, default='unassigned') # 未分配、已分配、已处理
+    status = db.Column(db.Enum('Unassigned', 'Assigned', 'Closed'), nullable=False, default='Unassigned') # 未分配、已分配、已处理
     location = db.Column(db.String(255))
     description = db.Column(db.Text())
 
@@ -59,3 +60,13 @@ class Ticket(db.Model):
     def save(self):
         db.session.add(self)
         db.session.commit()
+
+    @property
+    def status_label(self):
+        if self.status == 'Unassigned':
+            return '<span class="label label-default">待处理</span>'
+        elif self.status == 'Assigned':
+            return '<span class="label label-primary">处理中</span>'
+        else:
+            return '<span class="label label-success">已处理</span>'
+

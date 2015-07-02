@@ -85,7 +85,7 @@ def sanitize(text):
 
 @app.template_filter('abstract')
 def html_abstract(text):
-    return Markup(text).striptags()[0:150]
+    return Markup(text).striptags()[0:30]
 
 @app.template_filter('localtime')
 def localtime_minute(date):
