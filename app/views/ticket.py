@@ -4,7 +4,7 @@ from app.models import *
 from app.forms import *
 from datetime import datetime
 from sqlalchemy import union, or_
-from app.utils import send_close_ticket_mail
+from app.utils import send_assign_ticket_mail, send_close_ticket_mail
 
 ticket = Blueprint('ticket', __name__)
 
@@ -58,7 +58,7 @@ def assign(ticket_id):
         if ticket.worker.email:
             recipients = [ticket.worker.email]
             try:
-                send_assign_tiecket_mail(recipients, ticket)
+                send_assign_ticket_mail(recipients, ticket)
             except Exception as e:
                 print(e)
         return redirect(url_for('ticket.view_ticket', ticket_id=ticket.id))
