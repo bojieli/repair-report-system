@@ -12,7 +12,7 @@ LANGUAGES = {
 
 
 # SQL config
-SQLALCHEMY_DATABASE_URI = 'mysql+mysqldb://fix:fix@localhost/fix?charset=utf8'
+SQLALCHEMY_DATABASE_URI = 'sqlite:///fix.db'
 
 # Flask mail
 MAIL_SERVER = 'localhost'
