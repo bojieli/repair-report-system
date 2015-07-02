@@ -49,7 +49,8 @@ class Ticket(db.Model):
 
     building = db.relationship('Building')
     classroom = db.relationship('Classroom')
-    worker = db.relationship('User')
+    reporter = db.relationship('User', foreign_keys=reporter_id)
+    worker = db.relationship('User', foreign_keys=worker_id)
 
     def save(self):
         db.session.add(self)

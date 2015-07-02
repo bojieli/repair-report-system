@@ -30,6 +30,29 @@ class User(db.Model, UserMixin):
         db.session.add(self)
         db.session.commit()
 
+    def is_authenticated(self):
+        return True
+
+    def set_password(self, password):
+        self.password = generate_password_hash(password)
+        self.save()
+
+    def check_password(self,password):
+        """Check passwords.Returns ture if matchs"""
+        if self.password is None:
+            return False
+        return check_password_hash(self.password,password)
+
+    @classmethod
+    def authenticate(cls,login,password):
+        user = cls.query.filter(User.username == login).first()
+
+        if user and user.confirmed:
+            authenticated = user.check_password(password)
+        else:
+            authenticated = False
+        return user, authenticated, user.confirmed if user else False
+
 
 @lm.user_loader
 def load_user(userid):

@@ -1,8 +1,7 @@
 from flask import Blueprint, request, redirect,url_for,render_template,flash, abort, jsonify
 from flask.ext.login import login_user, login_required, current_user, logout_user
-from app.models import User, Building, Classroom, Ticket
+from app.models import *
 from app.forms import *
-from flask.ext.babel import gettext as _
 from datetime import datetime
 from sqlalchemy import union, or_
 
@@ -40,6 +39,7 @@ def search():
     return render_template('tickets.html', keyword=keyword, tickets=tickets_paged, this_module='home.search')
 
 @home.route('/mytickets/')
+@login_required
 def mytickets():
     if current_user.role == 'Reporter':
         mytickets = Ticket.query.filter(Ticket.reporter_id == current_user.id)
@@ -50,27 +50,5 @@ def mytickets():
 
     mytickets = mytickets.order_by(Ticket.status.desc()).order_by(Ticket.id.desc())
     return render_template('mytickets.html', tickets=mytickets)
-
-@home.route('/signin/',methods=['POST','GET'])
-def signin():
-    next_url = request.args.get('next') or url_for('home.index')
-    if current_user.is_authenticated():
-        return redirect(next_url)
-    form = LoginForm()
-    error = ''
-    if form.validate_on_submit():
-        user, status, confirmed = User.authenticate(form['username'].data,form['password'].data)
-        remember = form['remember'].data
-        if user:
-            if status:
-                return redirect(next_url)
-            else:
-                error = _('用户名或密码错误！')
-        else:
-            error = _('用户名或密码错误！')
-    return render_template('signin.html',form=form, error=error)
-
-
-
 
 
